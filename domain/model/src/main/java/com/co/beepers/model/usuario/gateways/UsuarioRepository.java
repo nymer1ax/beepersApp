@@ -9,5 +9,6 @@ public interface UsuarioRepository {
     Usuario crearUsuario(Usuario usuario);
     Optional<Usuario> findUsuarioByNumeroDocumento(Integer numeroDocumento);
     List<Usuario> getAllUsuario();
+    List<Usuario> getAllByNumeroDocumento(Integer numDocumento);
 
 }

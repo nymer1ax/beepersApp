@@ -44,6 +44,11 @@ public class UsuarioDataAdapter extends AdapterOperations<Usuario, UsuarioData, 
          return usuarios.stream().map(this::mapperUsuarioDataAUsuario).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Usuario> getAllByNumeroDocumento(Integer numDocumento) {
+        return this.repository.findAllByNumeroDocumento(numDocumento).stream().map(this::mapperUsuarioDataAUsuario).collect(Collectors.toList());
+    }
+
 
     private Usuario mapperUsuarioDataAUsuario(UsuarioData usuarioData){
         return Usuario.builder()
