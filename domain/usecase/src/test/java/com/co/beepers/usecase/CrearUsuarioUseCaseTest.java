@@ -38,7 +38,7 @@ public class CrearUsuarioUseCaseTest {
 
         when(usuarioRepository.crearUsuario(any(Usuario.class))).thenReturn(usuarioAcrear);
         crearUsuarioUseCase.crearUsuario(usuarioAcrear);
-        
+
         Assertions.assertEquals(23445322, usuarioAcrear.getNumeroDocumento());
 
 
