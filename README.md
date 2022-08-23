@@ -45,3 +45,55 @@ Los entry points representan los puntos de entrada de la aplicaci?n o el inicio 
 Este m?dulo es el m?s externo de la arquitectura, es el encargado de ensamblar los distintos m?dulos, resolver las dependencias y crear los beans de los casos de use (UseCases) de forma autom?tica, inyectando en ?stos instancias concretas de las dependencias declaradas. Adem?s inicia la aplicaci?n (es el ?nico m?dulo del proyecto donde encontraremos la funci?n ?public static void main(String[] args)?.
 
 **Los beans de los casos de uso se disponibilizan automaticamente gracias a un '@ComponentScan' ubicado en esta capa.**
+
+
+## ENDPOINTS
+
+POST http://localhost:8090/usuarios
+
+**Body**
+```
+{   
+"tipoDocumento": "C",
+"numeroDocumento" : 23445322
+}
+```
+
+**Response**
+
+```
+{
+    "id": 1,
+    "primerNombre": "CRISTIANO",
+    "segundoNombre": "RONALDO",
+    "primerApellido": "DO SANTOS",
+    "segundoApellido": "AVEIRO",
+    "telefono": "300CR7",
+    "direccion": "SIR MATT BUSBY WAY, OLD TRAFFORD, STRETFORD",
+    "ciudad": "MANCHESTER",
+    "tipoDocumento": "C",
+    "numeroDocumento": 2344532
+}
+```
+
+
+
+GET http://localhost:8090/usuarios
+
+**Response**
+```
+[
+    {
+    "id": 1,
+    "primerNombre": "CRISTIANO",
+    "segundoNombre": "RONALDO",
+    "primerApellido": "DO SANTOS",
+    "segundoApellido": "AVEIRO",
+    "telefono": "300CR7",
+    "direccion": "SIR MATT BUSBY WAY, OLD TRAFFORD, STRETFORD",
+    "ciudad": "MANCHESTER",
+    "tipoDocumento": "C",
+    "numeroDocumento": 23445322
+    }
+]
+```
