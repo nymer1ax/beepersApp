@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -24,16 +25,49 @@ public class UsuarioDataAdapter extends AdapterOperations<Usuario, UsuarioData, 
 
     @Override
     public Usuario crearUsuario(Usuario usuario) {
-        return null;
+        this.repository.save(mapperUsuarioAUsuarioData(usuario));
+        return usuario;
     }
 
     @Override
     public Optional<Usuario> findUsuarioByNumeroDocumento(Integer numeroDocumento) {
-        return Optional.empty();
+        return this.repository.findUsuarioDataByNumeroDocumento(numeroDocumento).map(this::mapperUsuarioDataAUsuario);
     }
 
     @Override
     public List<Usuario> getAllUsuario() {
-        return null;
+         var usuarios = this.repository.findAll();
+         return usuarios.stream().map(this::mapperUsuarioDataAUsuario).collect(Collectors.toList());
+    }
+
+
+    private Usuario mapperUsuarioDataAUsuario(UsuarioData usuarioData){
+        return Usuario.builder()
+                .id(usuarioData.getId())
+                .primerNombre(usuarioData.getPrimerNombre())
+                .segundoNombre(usuarioData.getSegundoNombre())
+                .primerApellido(usuarioData.getPrimerApellido())
+                .segundoApellido(usuarioData.getSegundoApellido())
+                .telefono(usuarioData.getTelefono())
+                .direccion(usuarioData.getDireccion())
+                .ciudad(usuarioData.getCiudad())
+                .tipoDocumento(usuarioData.getTipoDocumento())
+                .numeroDocumento(usuarioData.getNumeroDocumento())
+                .build();
+    }
+
+    private UsuarioData mapperUsuarioAUsuarioData(Usuario usuario){
+        return UsuarioData.builder()
+                .id(usuario.getId())
+                .primerNombre(usuario.getPrimerNombre())
+                .segundoNombre(usuario.getSegundoNombre())
+                .primerApellido(usuario.getPrimerApellido())
+                .segundoApellido(usuario.getSegundoApellido())
+                .telefono(usuario.getTelefono())
+                .direccion(usuario.getDireccion())
+                .ciudad(usuario.getCiudad())
+                .tipoDocumento(usuario.getTipoDocumento())
+                .numeroDocumento(usuario.getNumeroDocumento())
+                .build();
     }
 }

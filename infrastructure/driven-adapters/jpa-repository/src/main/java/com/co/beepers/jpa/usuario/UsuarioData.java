@@ -1,5 +1,6 @@
 package com.co.beepers.jpa.usuario;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @Entity
 @Table(name = "usuario")
+@Builder(toBuilder = true)
 public class UsuarioData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +24,6 @@ public class UsuarioData {
     @Column(name = "tipoDocumento", nullable = false)
     @Pattern(regexp = "(C|P)")
     private String tipoDocumento;
-    @Column(name = "numeroDocumento", nullable = false)
+    @Column(name = "numeroDocumento", nullable = false, unique = true)
     private Integer numeroDocumento;
 }
