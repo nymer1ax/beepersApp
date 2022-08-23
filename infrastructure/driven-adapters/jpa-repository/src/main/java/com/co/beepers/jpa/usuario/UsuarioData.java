@@ -1,15 +1,21 @@
 package com.co.beepers.jpa.usuario;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 @Data
 @Entity
 @Table(name = "usuario")
 @Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Valid
 public class UsuarioData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

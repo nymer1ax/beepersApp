@@ -25,8 +25,12 @@ public class UsuarioDataAdapter extends AdapterOperations<Usuario, UsuarioData, 
 
     @Override
     public Usuario crearUsuario(Usuario usuario) {
-        this.repository.save(mapperUsuarioAUsuarioData(usuario));
-        return usuario;
+
+        var user = mapperUsuarioAUsuarioData(usuario);
+
+        this.repository.save(user);
+
+        return mapperUsuarioDataAUsuario(user);
     }
 
     @Override
