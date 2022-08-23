@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
+
 
 @Repository
 public class UsuarioDataAdapter extends AdapterOperations<Usuario, UsuarioData, Long, UsuarioDataRepository> implements UsuarioRepository {

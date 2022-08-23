@@ -40,14 +40,14 @@ public class JpaConfig {
             DataSource dataSource, @Value("${spring.jpa.databasePlatform}") String dialect) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("co.com.plantinfo.jpa");
+        em.setPackagesToScan("com.co.beepers.jpa");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
 
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", dialect);
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create");
         em.setJpaProperties(properties);
 
         return em;
