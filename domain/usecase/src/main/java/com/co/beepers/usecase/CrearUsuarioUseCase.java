@@ -2,6 +2,8 @@ package com.co.beepers.usecase;
 
 import com.co.beepers.model.usuario.Usuario;
 import com.co.beepers.model.usuario.gateways.UsuarioRepository;
+import com.co.beepers.usecase.UsuarioException.Exceptions.CustomException;
+import com.co.beepers.usecase.UsuarioException.Exceptions.UsuarioExisteException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -14,13 +16,13 @@ public class CrearUsuarioUseCase {
         boolean usuarioExisteParaCrear = usuarioRepository.findUsuarioByNumeroDocumento(usuario.getNumeroDocumento()).isPresent();
 
         if (usuarioExisteParaCrear){
-            throw new RuntimeException("Este usuario existe");
+            throw new UsuarioExisteException("Este usuario existe");
         }
 
         boolean numeroDocumentoYaExiste = usuarioRepository.getAllUsuario().stream().anyMatch(u -> u.getNumeroDocumento().equals(usuario.getNumeroDocumento()));
 
         if(numeroDocumentoYaExiste){
-            throw new RuntimeException("Numero documento ya existe");
+            throw new CustomException("Numero documento ya existe");
         }
 
         Usuario usuarioAcrear = Usuario.builder()
