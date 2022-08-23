@@ -18,6 +18,4 @@ spring:
     driverClassName: "org.h2.Driver"
   jpa:
     databasePlatform: "org.hibernate.dialect.H2Dialect"
-aws:
-  region: "us-east-1"
-  secretName: "my-secret"
+

@@ -1,13 +1,11 @@
 package com.co.beepers.jpa.config;
 
-import co.com.bancolombia.secretsmanager.api.GenericManager;
-import co.com.bancolombia.secretsmanager.api.exceptions.SecretException;
-import com.co.beepers.jpa.config.DBSecret;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -19,9 +17,12 @@ import java.util.Properties;
 public class JpaConfig {
 
     @Bean
-    public DBSecret dbSecret(@Value("${aws.secretName}") String secret, GenericManager manager)
-            throws SecretException {
-        return manager.getSecret(secret, DBSecret.class);
+    public DBSecret dbSecret(Environment env) {
+        return DBSecret.builder()
+                .url(env.getProperty("spring.datasource.url"))
+                .username(env.getProperty("spring.datasource.username"))
+                .password(env.getProperty("spring.datasource.password"))
+                .build();
     }
 
     @Bean
@@ -36,18 +37,17 @@ public class JpaConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            DataSource dataSource,
-            @Value("${spring.jpa.databasePlatform}") String dialect) {
+            DataSource dataSource, @Value("${spring.jpa.databasePlatform}") String dialect) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.co.beepers.jpa");
+        em.setPackagesToScan("co.com.plantinfo.jpa");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
 
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", dialect);
-        properties.setProperty("hibernate.hbm2ddl.auto", "update"); // TODO: remove this for non auto create schema
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         em.setJpaProperties(properties);
 
         return em;
